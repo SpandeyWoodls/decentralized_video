@@ -157,7 +157,7 @@ redis-cli ping   # should respond PONG
 
 ```bash
 cd ~/Desktop/0block/decentralized_video
-source ../block_env/bin/activate
+source ../block/bin/activate
 # ensure env vars are loaded (or put in .env)
 celery -A decentralized_video.worker.celery_app worker --loglevel=info
 ```
@@ -166,7 +166,7 @@ celery -A decentralized_video.worker.celery_app worker --loglevel=info
 
 ```bash
 cd ~/Desktop/0block/decentralized_video
-source ../block_env/bin/activate
+source ../block/bin/activate
 # ensure env vars loaded
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
