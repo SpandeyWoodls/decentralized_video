@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.env
+block/
+celerybeat-schedule
+celerybeat.pid
+*.egg-info/
+dist/
+build/
+*.dump
+*.sql
+artifacts/
+cache/
+node_modules/
+.env
+.vscode/
+.idea/
