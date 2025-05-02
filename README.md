@@ -122,7 +122,7 @@ jq '{abi: .abi}' artifacts/contracts/StorageStaking.sol/StorageStaking.json \
 
 ### Environment Variables
 
-Create a `.env` file in `decentralized_video/` or export these in your shell:
+Create a `.env` file in `decentralized_video/` or export these in your shell: (eg : d ~/Desktop/0block , source block/bin/activate) 
 
 ```bash
 export DATABASE_URL="postgresql://blocksql:blocksqlpwd@localhost:5432/decentralized_video"
