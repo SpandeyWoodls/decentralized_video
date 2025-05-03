@@ -1,11 +1,9 @@
-# setup.py
 from setuptools import setup, find_packages
 
 setup(
     name="decentralized_video",
     version="0.1.0",
-    packages=find_packages(),          # this will pick up your app/ and worker/ packages
-    include_package_data=True,
+    packages=find_packages(),          # will pick up decentralized_video, its subpackages, etc.
     install_requires=[
         "fastapi>=0.95.2",
         "uvicorn>=0.23.1",
@@ -21,8 +19,7 @@ setup(
     ],
     entry_points={
         "console_scripts": {
-            # optional shortcut, if you later want `dv-server` on your PATH
-            "dv-server = app.main:app",
+            "dv-server = decentralized_video.app.main:app",
         },
     },
 )

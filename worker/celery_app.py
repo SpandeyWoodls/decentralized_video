@@ -1,5 +1,3 @@
-# decentralized_video/worker/celery_app.py
-
 import os
 from celery import Celery
 
@@ -12,7 +10,8 @@ celery_app = Celery(
     "decentralized_video",
     broker=BROKER_URL,
     backend=RESULT_BACKEND,
+    include=["decentralized_video.worker.tasks"]  # discover tasks here
 )
 
-# Automatically discover tasks in the worker.tasks module
-celery_app.autodiscover_tasks(["decentralized_video.worker.tasks"])
+# (Optional) you can also call autodiscover if needed:
+# celery_app.autodiscover_tasks(["decentralized_video.worker.tasks"])
