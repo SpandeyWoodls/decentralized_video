@@ -196,6 +196,14 @@ Check the thumbnails endpoint:
 GET http://localhost:8000/videos/{video_id}/thumbnails
 ```
 
+## Testing
+
+Run the test suite with **pytest**:
+
+```bash
+pytest
+```
+
 ## Contributing
 
 1. Fork the repo

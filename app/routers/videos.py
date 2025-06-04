@@ -10,6 +10,7 @@ from worker.tasks import process_video
 from ..crud import create_video, get_video, list_chunks
 from ..main import get_db
 from ..services.ipfs import fetch_chunk
+from ..models import Video
  # Celery task for background processing
 
 router = APIRouter()
@@ -71,3 +72,37 @@ def get_chunk(cid: str):
     if data is None:
         raise HTTPException(status_code=404, detail="Chunk not found")
     return Response(content=data, media_type="application/octet-stream")
+
+# --- List all videos ---
+class VideoInfo(BaseModel):
+    id: uuid.UUID
+    uploader: str
+    video_hash: str
+    metadata_uri: str
+
+    class Config:
+        orm_mode = True
+
+@router.get("/", response_model=List[VideoInfo])
+def list_videos(db: Session = Depends(get_db)):
+    return db.query(Video).all()
+
+# --- Get video metadata ---
+@router.get("/{video_id}", response_model=VideoInfo)
+def get_video_info(video_id: uuid.UUID, db: Session = Depends(get_db)):
+    video = get_video(db, video_id)
+    if not video:
+        raise HTTPException(status_code=404, detail="Video not found")
+    return video
+
+# --- Get thumbnails for a video ---
+class ThumbnailsResponse(BaseModel):
+    thumbnails: List[str]
+
+@router.get("/{video_id}/thumbnails", response_model=ThumbnailsResponse)
+def get_thumbnails(video_id: uuid.UUID):
+    thumb_dir = os.path.join("tmp", str(video_id))
+    if not os.path.isdir(thumb_dir):
+        raise HTTPException(status_code=404, detail="Thumbnails not found")
+    files = sorted([f for f in os.listdir(thumb_dir) if f.startswith("thumb")])
+    return {"thumbnails": files}
